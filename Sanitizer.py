@@ -60,6 +60,9 @@ class Sanitizer():
 
 	def __is_int(self, name, data): 
 		try:
+			if data.find('.') != -1:
+				self.__errors("'%s' not integer" % (name,))
+				return (False, None)
 			return (True, int(data))
 		except Exception:
 			self.__errors.append("'%s' not integer" % (name,))
@@ -67,6 +70,9 @@ class Sanitizer():
 
 	def __is_float(self, name, data): 
 		try:
+			if data.find('.') == -1:
+				self.__errors("'%s' not float" % (name,))
+				return (False, None)
 			return (True, float(data))
 		except Exception:
 			self.__errors.append("'%s' not float" % (name,))
@@ -139,6 +145,3 @@ class Sanitizer():
 		except Exception:
 			self.__errors.append("'%s' not structure" % (name,))
 			return (False, None)
-
-	def p(self):
-		print(self.__data)
